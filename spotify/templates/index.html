@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heart {
+            font-family: 'Lobster', cursive;
+            font-size: 28vw;  /* 85% of 50vw */
+            color: gray;
+            position: absolute;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .border {
+            font-family: 'Lobster', cursive;
+            font-size: 30vw;  /* 85% of 50vw */
+            color: gray;
+            position: absolute;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .vibe-button {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3vw;
+            position: absolute;
+            z-index: 2;
+            border: none;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">❤</div>
+    <div class="border">❤</div>
+    <button class="vibe-button">validate your vibe</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        anime.timeline({
+            loop: true,
+            easing: 'easeInOutQuad',
+            direction: 'alternate',
+        }).add({
+            targets: ['.heart', '.border'],
+            scale: ['1', '1.2', '1'],
+            opacity: ['0.5', '1', '0.5'],
+            duration: 2000,
+            offset: 0
+        });
+    </script>
+</body>
+</html>
