@@ -19,7 +19,7 @@
             font-size: 20vw;  /* 85% of 50vw */
             color: var(--your-color, gray);
             position: absolute;
-            opacity: 0.5;
+            opacity: 0.2;
             z-index: 1;
         }
 
@@ -34,11 +34,12 @@
         
         .profile-pic {
             border: 10px solid var(--your-color, gray);
-            width: 12vw;  /* Same as .heart */
-            height: 12vw;  /* Same as .heart */
+            width: 17vw;  /* Same as .heart */
+            height: 17vw;  /* Same as .heart */
             position: absolute;
             z-index: 1;
-            opacity: 0.2;
+            opacity: 1;
+            top: 17.5%;
             background: url('{{profile_picture}}') no-repeat center;
             background-size: cover;
             border-radius: 50%;  /* Makes the image circular */
@@ -48,7 +49,7 @@
             border: 5px solid var(--your-color, gray);
             width: 10vw;
             height: 10vw;
-            opacity: 0.2;
+            opacity: 0.8;
             position: absolute;
             border-radius: 50%;
             background-size: cover;
@@ -66,32 +67,34 @@
 
         .message {
             font-family: 'Lobster', cursive;
-            font-size: 5vw;
+            font-size: 3vw;
             position: absolute;
-            top: 30%;
+            top: 52.5%;
             width: 100%;
             text-align: center;
             z-index: 3;
+            border: none;
+            background-color: transparent;
+            color: #000066;
+            cursor: pointer;
         }
 
         .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: absolute;
-            top: 50%;
+            top: 60%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 4;
+            z-index: 2;
         }
 
         .heart-container {
             position: relative;
-            width: 10vw;  /* the same width as your heart */
-            height: 10vw;  /* the same height as your heart */
-            margin: 0 5%;
-            flex-direction: row;
+            width: 12vw;  /* Adjust this if the hearts are too close or too far apart */
+            height: 10vw;  
+            margin: 10% 4%;  /* Adjust this if the hearts are too close or too far apart */
         }
 
         .heart2 {
@@ -99,23 +102,25 @@
             top: 0;
             left: 0;
             font-family: 'Lobster', cursive;
-            font-size: 10vw;
-            color: gray;
-            opacity: 0;
-            z-index: 1;
+            font-size: 12vw;
+            color: var(--your-color, gray);
+            opacity: 1;
+            z-index: 2;
         }
 
         .text {
             position: absolute;
-            top: 65%;
-            left: 50%;
+            top: 70%;  /* Centering the text vertically in the heart container */
+            left: 80%;  /* Centering the text horizontally in the heart container */
             font-family: 'Lobster', cursive;
-            font-size: 7vw;
+            font-size: 2vw;  /* Adjust this if the text size is too small or too large */
             transform: translate(-50%, -50%);
             z-index: 2;
-            font-size: 1vw;  /* adjust as needed */
             text-align: center;
+            color: #000066;
+            cursor: pointer;
         }
+
 
 
     </style>
@@ -129,16 +134,14 @@
     </div>
     
       
-        <div class="container">
-            <div class="hearts-container">
-                {% for personality in current_personality %}
-                <div class="heart-container">
-                    <div class="heart2">❤</div>
-                    <div class="text">{{ personality }}</div>
-                </div>
-                {% endfor %}
-            </div>
+    <div class="container">
+        {% for personality in current_personality %}
+        <div class="heart-container">
+            <div class="heart2">❤</div>
+            <div class="text">{{ personality }}</div>
         </div>
+        {% endfor %}
+    </div>
         
 
 
@@ -209,23 +212,23 @@
 
         animate();
 
+
         anime.timeline({
-            loop: true,
             easing: 'easeInOutQuad',
             direction: 'alternate',
         }).add({
             targets: '.heart2',
             scale: ['1', '1.2', '1'],
-            opacity: ['0.7', '1', '0.7'],
-            duration: 2000,
+            opacity: ['1', '1', '1'],
+            duration: 1000,
             offset: 0,
-            delay: anime.stagger(1000) // delay for each heart
+            delay: anime.stagger(500) // delay for each heart
         }).add({
             targets: '.heart2',
-            opacity: [0, 1],
-            duration: 2000,
+            opacity: [1, 1],
+            duration: 1000,
             offset: '-=5000', // start 5000ms before the previous animation ends
-            delay: anime.stagger(1000) // delay for each heart
+            delay: anime.stagger(500) // delay for each heart
         });
 
 

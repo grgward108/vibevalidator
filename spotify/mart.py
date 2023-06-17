@@ -122,7 +122,7 @@ color_mapping = {
     (1.75, 2.5): '#AFEEEE',  # Pale Turquoise
     (2.5, 3.25): '#90EE90',  # Soft Green
     (3.25, 4): '#32CD32',  # Light Lime
-    (4, 4.75): '#FFFF99',  # Pale Yellow
+    (4, 4.75): '#F1D302',  # Pale Yellow
     (4.75, 5.5): '#FFDAB9',  # Peach
     (5.5, 6.25): '#F08080',  # Light Coral
     (6.25, 7): '#FFC0CB'  # Soft Pink
