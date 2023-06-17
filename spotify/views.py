@@ -10,7 +10,7 @@ from .helpers import mapping, map_personality_to_color
 def spotify_auth(request):
     redirect_uri = quote('https://vibevalidator-066e2269d7e5.herokuapp.com/spotify_redirect')
     scopes = quote('user-top-read user-read-private user-read-email')
-    auth_url = auth_url = f"https://accounts.spotify.com/authorize?client_id={settings.SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri={redirect_uri}&scope={scopes}"
+    auth_url = f"https://accounts.spotify.com/authorize?client_id={settings.SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri={redirect_uri}&scope={scopes}"
     return HttpResponseRedirect(auth_url)
 
 def index(request):
