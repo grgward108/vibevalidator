@@ -79,4 +79,16 @@ def fetch_data(request):
         return render(request, "result.html", data)
     
     else:
-        return HttpResponse("Error retrieving data from Spotify.")
+        error_message = "Error retrieving data from Spotify.\n"
+        error_message += f"Short term top artists response code: {short_term_top_artists_response.status_code}\n"
+        error_message += f"Long term top artists response code: {long_term_top_artists_response.status_code}\n"
+        error_message += f"User profile response code: {user_profile_response.status_code}\n"
+
+        if short_term_top_artists_response.status_code != 200:
+            error_message += f"Short term top artists response: {short_term_top_artists_response.text}\n"
+        if long_term_top_artists_response.status_code != 200:
+            error_message += f"Long term top artists response: {long_term_top_artists_response.text}\n"
+        if user_profile_response.status_code != 200:
+            error_message += f"User profile response: {user_profile_response.text}\n"
+
+        return HttpResponse(error_message)
