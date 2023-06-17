@@ -10,3 +10,5 @@ SQLAlchemy==2.0.7
 sqlparse==0.4.3
 typing_extensions==4.5.0
 whitenoise==6.3.0
+requests>=2.25.1
+
