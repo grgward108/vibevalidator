@@ -83,6 +83,7 @@ def fetch_data(request):
         long_term_error = long_term_top_artists_response.json()
         user_profile_error = user_profile_response.json()
         error_data = {
+            "user_profile_data" : user_profile_data,
             "short_term_error": short_term_error,
             "long_term_error": long_term_error,
             "user_profile_error": user_profile_error,
