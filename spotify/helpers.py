@@ -11,7 +11,7 @@ def mapping(genres):
                     for trait in group_personality_mapping[group]:
                         personality_points[trait] += 1
     # Get the top three personality traits with the highest points
-    top_personality_traits = sorted(personality_points, key=personality_points.get, reverse=True)[:3]
+    top_personality_traits = sorted(personality_points, key=personality_points.get, reverse=True)[:5]
 
     return top_personality_traits
 
