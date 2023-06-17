@@ -8,7 +8,7 @@ from .helpers import mapping, map_personality_to_color
 
 
 def spotify_auth(request):
-    redirect_uri = quote('http://127.0.0.1:8000/spotify/spotify_redirect')
+    redirect_uri = quote('http://127.0.0.1:8000/spotify_redirect')
     scopes = quote('user-top-read')
     auth_url = auth_url = f"https://accounts.spotify.com/authorize?client_id={settings.SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri={redirect_uri}&scope={scopes}"
     return HttpResponseRedirect(auth_url)
