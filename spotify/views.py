@@ -71,9 +71,9 @@ def fetch_data(request):
 
     # Get the user's profile information
     user_profile_response = requests.get('https://api.spotify.com/v1/me', headers=headers)
+    print(f"User profile status code: {user_profile_response.status_code}")
+    print(f"User profile response text: {user_profile_response.text}")
     user_profile_data = user_profile_response.json()
-    username = user_profile_data.get('display_name', 'Unknown user')
-    
 
     # Define parameters for the requests
     params = {
@@ -83,10 +83,14 @@ def fetch_data(request):
     # Fetch short term top artists
     params['time_range'] = 'short_term'
     short_term_top_artists_response = requests.get('https://api.spotify.com/v1/me/top/artists', headers=headers, params=params)
+    print(f"Short term top artists status code: {short_term_top_artists_response.status_code}")
+    print(f"Short term top artists response text: {short_term_top_artists_response.text}")
 
     # Fetch long term top artists
     params['time_range'] = 'long_term'
     long_term_top_artists_response = requests.get('https://api.spotify.com/v1/me/top/artists', headers=headers, params=params)
+    print(f"Long term top artists status code: {long_term_top_artists_response.status_code}")
+    print(f"Long term top artists response text: {long_term_top_artists_response.text}")
 
     if short_term_top_artists_response.status_code == 200 and long_term_top_artists_response.status_code == 200 and user_profile_response.status_code == 200:
         short_term_top_artists_data = short_term_top_artists_response.json()
