@@ -72,9 +72,10 @@ def fetch_data(request):
     # Get the user's profile information
     user_profile_response = requests.get('https://api.spotify.com/v1/me', headers=headers)
     print(f"User profile status code: {user_profile_response.status_code}")
-    print(f"User profile response text: {user_profile_response.text}")
+    print(f"User profile response text: {user_profile_response.text}")   
     user_profile_data = user_profile_response.json()
-
+    username = user_profile_data.get('display_name', 'Unknown user')
+    
     # Define parameters for the requests
     params = {
         'limit': 50
