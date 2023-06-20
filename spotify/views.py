@@ -50,7 +50,7 @@ def fetch_data(request):
     user_profile_response = requests.get('https://api.spotify.com/v1/me', headers=headers)
     user_profile_data = user_profile_response.json()
     username = user_profile_data.get('display_name', 'Unknown user')
-    profile_picture = user_profile_data['images'][0]['url'] if user_profile_data['images'][0]['url'] else 'No profile picture'
+    
 
     # Define parameters for the requests
     params = {
