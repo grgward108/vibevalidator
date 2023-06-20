@@ -81,7 +81,7 @@ def fetch_data(request):
 
         data = {
             "username": username,
-            "profile_picture": profile_picture,
+            # "profile_picture": profile_picture,
             "current_personality": your_personality,
             "short_term_top_photos": short_term_top_photos,
             "current_color" : your_color,
