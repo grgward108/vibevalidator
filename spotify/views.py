@@ -13,8 +13,9 @@ from urllib.parse import urlparse, parse_qs
 def spotify_auth(request):
     redirect_uri = quote('https://vibevalidator-066e2269d7e5.herokuapp.com/spotify_redirect')
     scopes = quote('user-top-read user-read-private user-read-email')
-    auth_url = f"https://accounts.spotify.com/authorize?client_id={settings.SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri={redirect_uri}&scope={scopes}"
+    auth_url = f"https://accounts.spotify.com/authorize?client_id={settings.SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri={redirect_uri}&scope={scopes}"
     return HttpResponseRedirect(auth_url)
+
 
 def index(request):
     return HttpResponse("Hello, World!")
@@ -25,22 +26,42 @@ def index2(request):
 
 
 def spotify_redirect(request):
-    # Extract the access token from the URL
-    url = request.build_absolute_uri()
-    parsed = urlparse(url)
-    params = parse_qs(parsed.fragment)
-    access_token = params.get('access_token', [None])[0]
+    code = request.GET.get('code')
+    redirect_uri = 'https://vibevalidator-066e2269d7e5.herokuapp.com/spotify_redirect'
+    token_response = requests.post('https://accounts.spotify.com/api/token', data={
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'client_id': settings.SPOTIFY_CLIENT_ID,
+        'client_secret': settings.SPOTIFY_CLIENT_SECRET,
+    })
+    token_data = token_response.json()
+    access_token = token_data['access_token']
+    refresh_token = token_data['refresh_token']
+    # Save these tokens in the session
+    request.session['access_token'] = access_token
+    request.session['refresh_token'] = refresh_token
 
-    # Save the access token to the session
-    if access_token:
-        request.session['access_token'] = access_token
 
-    # Redirect to fetch_data view
-    return redirect('fetch_data')
+def refresh_token(request):
+    # Retrieve the refresh token from the session
+    refresh_token = request.session.get('refresh_token')
+    token_response = requests.post('https://accounts.spotify.com/api/token', data={
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token,
+        'client_id': settings.SPOTIFY_CLIENT_ID,
+        'client_secret': settings.SPOTIFY_CLIENT_SECRET,
+    })
+    token_data = token_response.json()
+    access_token = token_data['access_token']
+    # Save the new access token in the session
+    request.session['access_token'] = access_token
+
+
 
 @csrf_exempt
 def fetch_data(request):
-    access_token = request.GET.get('access_token')
+    access_token = request.session.get('access_token')
 
     headers = {
         'Authorization': f'Bearer {access_token}',
