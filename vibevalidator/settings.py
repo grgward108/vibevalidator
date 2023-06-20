@@ -50,6 +50,13 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://user:password@localhost:5432/mydatabase'
+    )
+}
 
 # Application definition
 
