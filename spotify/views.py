@@ -5,6 +5,9 @@ from urllib.parse import quote
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from .helpers import mapping, map_personality_to_color
+from django.shortcuts import redirect
+from urllib.parse import urlparse, parse_qs
+
 
 
 def spotify_auth(request):
@@ -22,7 +25,18 @@ def index2(request):
 
 
 def spotify_redirect(request):
-    return render(request, 'spotify_redirect.html')
+    # Extract the access token from the URL
+    url = request.build_absolute_uri()
+    parsed = urlparse(url)
+    params = parse_qs(parsed.fragment)
+    access_token = params.get('access_token', [None])[0]
+
+    # Save the access token to the session
+    if access_token:
+        request.session['access_token'] = access_token
+
+    # Redirect to fetch_data view
+    return redirect('fetch_data')
 
 @csrf_exempt
 def fetch_data(request):
@@ -36,7 +50,7 @@ def fetch_data(request):
     user_profile_response = requests.get('https://api.spotify.com/v1/me', headers=headers)
     user_profile_data = user_profile_response.json()
     username = user_profile_data.get('display_name', 'Unknown user')
-    profile_picture = user_profile_data['images'][0]['url'] if user_profile_data['images'] else 'No profile picture'
+    profile_picture = user_profile_data['images'][0]['url'] if user_profile_data['images'][0]['url'] else 'No profile picture'
 
     # Define parameters for the requests
     params = {
