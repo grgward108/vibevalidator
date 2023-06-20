@@ -41,6 +41,7 @@ def spotify_redirect(request):
     # Save these tokens in the session
     request.session['access_token'] = access_token
     request.session['refresh_token'] = refresh_token
+    return HttpResponse("Redirect Successful")
 
 
 def refresh_token(request):
@@ -56,6 +57,7 @@ def refresh_token(request):
     access_token = token_data['access_token']
     # Save the new access token in the session
     request.session['access_token'] = access_token
+    return HttpResponse("Redirect Successful")
 
 
 
